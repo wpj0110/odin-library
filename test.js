@@ -11,13 +11,11 @@ Book.prototype.information = function(){
     return `${this.title} ${this.author} ${this.year}`;
 }
 
-function getAttributes(){
+function getAttributes(){ //gets the attributes of all the forms
     let inputTitle = document.getElementById("title").value;
     let inputAuthor = document.getElementById("author").value;
     let inputYear = document.getElementById("year").value;
     let inputStatus = document.getElementById("read-status-id").value;
-    console.log(inputStatus);
-    
     let bookObj = new Book(inputTitle,inputAuthor,inputYear,inputStatus);
     myLibrary.push(bookObj); //adds the object into the end of the myLibrary array
     createTable(myLibrary); //creates the table
@@ -45,10 +43,18 @@ function createTable(tableData) { //reference: https://stackoverflow.com/a/15164
       var row = document.createElement('tr');
         for (var prop in rowData) { //reference: https://stackoverflow.com/a/16735184 ,adds every property to the table
             if (Object.prototype.hasOwnProperty.call(rowData, prop)) {
-                var property = rowData[`${prop}`];
                 var cell = document.createElement('td');
-                cell.appendChild(document.createTextNode(property));
+                var property = rowData[`${prop}`];
+                if (property === "Unread" || property === "Read"){
+                    console.log("Read/Unread Part")
+                    var readButton = document.createElement("button"); //https://www.w3schools.com/jsref/met_document_createelement.asp
+                    readButton.innerText = `${property}`
+                    cell.appendChild(readButton)
+                } else{
+                    cell.appendChild(document.createTextNode(property));
+                }
                 row.appendChild(cell);
+
             }
         }
         tableBody.appendChild(row);
@@ -105,4 +111,4 @@ btn.addEventListener('click', () => {
 btn.addEventListener('click', function (e) {
     //console.log(e);
     e.target.style.background = 'blue';
-  });
+});
