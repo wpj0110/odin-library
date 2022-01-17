@@ -1,10 +1,12 @@
 let myLibrary = [];
+var btnCount = 0; //button count, incremented as needed. Used as the id for newly created buttons.
 
-function Book(title,author,year, status){ //constructor
+function Book(title, author, year, status){ //constructor
     this.title = title;
     this.author = author;
     this.year = year;
     this.status = status;
+    this.btnCount = btnCount; //btnCount is global anyway
 }
 
 Book.prototype.information = function(){
@@ -49,6 +51,9 @@ function createTable(tableData) { //reference: https://stackoverflow.com/a/15164
                     console.log("Read/Unread Part")
                     var readButton = document.createElement("button"); //https://www.w3schools.com/jsref/met_document_createelement.asp
                     readButton.innerText = `${property}`
+                    readButton.id = `${btnCount++}`;
+                    readButton.className = "read-button";
+                    readButton.setAttribute("onclick",`readStatus(${readButton.id})`);
                     cell.appendChild(readButton)
                 } else{
                     cell.appendChild(document.createTextNode(property));
@@ -69,6 +74,27 @@ function deleteTable(){ //reference: https://stackoverflow.com/a/19865006
     for (var x=rowCount-1; x>0; x--) {
        myTable.deleteRow(x);
     }
+}
+
+function readStatus(btnId){ //changes the read status of the book object from read -> unread or unread -> read 
+    document.getElementById(`${btnId}`).addEventListener('click', function (e) {
+        //console.log(e);
+        //e.target.style.background = 'blue';
+        for(let i = 0; i < myLibrary.length; i++){
+            if(btnId == myLibrary[i].btnCount){
+                if (myLibrary[i].status === "Unread"){
+                    myLibrary[i].status = "Read";
+                } else{
+                    myLibrary[i].status = "Unread";
+                }
+                break;
+            }
+        }
+        e.target.innerText = myLibrary[i].status;
+    });
+    console.log("My Library is: "+myLibrary);
+    createTable(myLibrary);
+    return;
 }
 
 
