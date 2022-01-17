@@ -1,17 +1,6 @@
 let myLibrary = [];
 
-function getAttributes(){
-    let inputTitle = document.getElementById("title").value;
-    let inputAuthor = document.getElementById("author").value;
-    let inputYear = document.getElementById("year").value;
-    
-    let bookObj = new Book(inputTitle,inputAuthor,inputYear);
-    myLibrary.push(bookObj); //adds the object into the end of the myLibrary array
-    createTable(myLibrary);
-    
-}
-
-function Book(title,author,year){
+function Book(title,author,year){ //constructor
     this.title = title;
     this.author = author;
     this.year = year;
@@ -21,7 +10,21 @@ Book.prototype.information = function(){
     return `${this.title} ${this.author} ${this.year}`;
 }
 
-function displayLibrary(){
+function getAttributes(){
+    let inputTitle = document.getElementById("title").value;
+    let inputAuthor = document.getElementById("author").value;
+    let inputYear = document.getElementById("year").value;
+    
+    let bookObj = new Book(inputTitle,inputAuthor,inputYear);
+    myLibrary.push(bookObj); //adds the object into the end of the myLibrary array
+    createTable(myLibrary); //creates the table
+
+    //Resets the forms
+    document.getElementById("formDetail").reset();
+    
+}
+
+function displayLibrary(){ //debugging function, not needed
     console.log("library size = "+myLibrary.length);
     for(let x = 0; x < myLibrary.length; x++){
         //console.log("inside");
@@ -32,6 +35,8 @@ function displayLibrary(){
 function createTable(tableData) { //reference: https://stackoverflow.com/a/15164958
     var table = document.getElementById('libraryTable');
     var tableBody = document.createElement('tbody');
+    deleteTable(); //technically, it just deletes the table every time it creates a new one.
+                   //The myLibrary array is untouched, and it is reloaded again.
   
     tableData.forEach(function(rowData) {
       var row = document.createElement('tr');
@@ -47,7 +52,15 @@ function createTable(tableData) { //reference: https://stackoverflow.com/a/15164
     });
     table.appendChild(tableBody);
     document.body.appendChild(table);
-  }
+}
+
+function deleteTable(){ //reference: https://stackoverflow.com/a/19865006
+    var myTable = document.getElementById("libraryTable");
+    var rowCount = myTable.rows.length;
+    for (var x=rowCount-1; x>0; x--) {
+       myTable.deleteRow(x);
+    }
+}
 
 
 
