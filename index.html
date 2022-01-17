@@ -11,9 +11,14 @@
 <body>
     <h4>Add Book</h4>
     <form id="formDetail"> 
-        Title: <input id="title" type="text" placeholder="Enter Book Title">
-        Author: <input id="author" type="text" placeholder="Enter Book Author">
-        Year: <input id="year" type="number" placeholder="Enter Book Year">
+        Title: <input type="text" id="title"  placeholder="Enter Book Title">
+        Author: <input type="text" id="author"  placeholder="Enter Book Author">
+        Year: <input type="number" id="year"  placeholder="Enter Book Year">
+        <label for="read-status">Read Status:</label>
+        <select name="read-status" id="read-status-id">
+            <option value="Unread">Unread</option>
+            <option value="Read">Read</option>
+        </select>
     </form>
     <button onclick="getAttributes()">Add</button>
     <button onclick="displayLibrary()">Display Table</button>
@@ -29,6 +34,7 @@
             <th>Title</th>
             <th>Author</th>
             <th>Year</th>
+            <th>Read Status</th>
         </tr>
     </table>
 </body>

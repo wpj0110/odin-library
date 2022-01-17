@@ -1,9 +1,10 @@
 let myLibrary = [];
 
-function Book(title,author,year){ //constructor
+function Book(title,author,year, status){ //constructor
     this.title = title;
     this.author = author;
     this.year = year;
+    this.status = status;
 }
 
 Book.prototype.information = function(){
@@ -14,8 +15,10 @@ function getAttributes(){
     let inputTitle = document.getElementById("title").value;
     let inputAuthor = document.getElementById("author").value;
     let inputYear = document.getElementById("year").value;
+    let inputStatus = document.getElementById("read-status-id").value;
+    console.log(inputStatus);
     
-    let bookObj = new Book(inputTitle,inputAuthor,inputYear);
+    let bookObj = new Book(inputTitle,inputAuthor,inputYear,inputStatus);
     myLibrary.push(bookObj); //adds the object into the end of the myLibrary array
     createTable(myLibrary); //creates the table
 
@@ -40,7 +43,7 @@ function createTable(tableData) { //reference: https://stackoverflow.com/a/15164
   
     tableData.forEach(function(rowData) {
       var row = document.createElement('tr');
-        for (var prop in rowData) { //reference: https://stackoverflow.com/a/16735184
+        for (var prop in rowData) { //reference: https://stackoverflow.com/a/16735184 ,adds every property to the table
             if (Object.prototype.hasOwnProperty.call(rowData, prop)) {
                 var property = rowData[`${prop}`];
                 var cell = document.createElement('td');
@@ -48,7 +51,7 @@ function createTable(tableData) { //reference: https://stackoverflow.com/a/15164
                 row.appendChild(cell);
             }
         }
-        tableBody.appendChild(row); //important, do not delete this
+        tableBody.appendChild(row);
     });
     table.appendChild(tableBody);
     document.body.appendChild(table);
