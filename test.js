@@ -1,30 +1,24 @@
+let myLibrary = [];
+
 function getAttributes(){
-    let inputName = document.getElementById("input1").value;
-    let inputAuthor = document.getElementById("input2").value;
-    let inputDate = document.getElementById("input3").value;
+    let inputTitle = document.getElementById("title").value;
+    let inputAuthor = document.getElementById("author").value;
+    let inputYear = document.getElementById("year").value;
     
-    let bookObj = new Book(inputName,inputAuthor,inputDate);
-    addBookToLibrary(bookObj);
+    let bookObj = new Book(inputTitle,inputAuthor,inputYear);
+    myLibrary.push(bookObj); //adds the object into the end of the myLibrary array
+    createTable(myLibrary);
     
 }
 
-let myLibrary = [];
-
-function Book(title,author,date){
+function Book(title,author,year){
     this.title = title;
     this.author = author;
-    this.date = date;
+    this.year = year;
 }
 
 Book.prototype.information = function(){
-    return `${this.title} ${this.author} ${this.date}`;
-}
-
-function addBookToLibrary(bookObj) {
-    console.log("adding book "+myLibrary.length);
-    //myLibrary[myLibrary.length-1] = bookObj;
-    myLibrary.push(bookObj);
-    console.log(myLibrary.length);
+    return `${this.title} ${this.author} ${this.year}`;
 }
 
 function displayLibrary(){
@@ -34,15 +28,49 @@ function displayLibrary(){
         console.log(myLibrary[x]);
     }
 }
+
+function createTable(tableData) { //reference: https://stackoverflow.com/a/15164958
+    var table = document.getElementById('libraryTable');
+    var tableBody = document.createElement('tbody');
+  
+    tableData.forEach(function(rowData) {
+      var row = document.createElement('tr');
+        for (var prop in rowData) { //reference: https://stackoverflow.com/a/16735184
+            if (Object.prototype.hasOwnProperty.call(rowData, prop)) {
+                var property = rowData[`${prop}`];
+                var cell = document.createElement('td');
+                cell.appendChild(document.createTextNode(property));
+                row.appendChild(cell);
+            }
+        }
+        tableBody.appendChild(row); //important, do not delete this
+    });
+    table.appendChild(tableBody);
+    document.body.appendChild(table);
+  }
+
+
+
+/////////FOR DEBUGGING////////////
 ///Testing if it works properly
-//const book1 = new Book("title1","author1","date1");
-//const book2 = new Book("title2","author2","date2");
+//const book1 = new Book("hobbit","author1","year1");
+//const book2 = new Book("lord of the rings","author2","year2");
 
 //addBookToLibrary(book1);
 //addBookToLibrary(book2);
 
 //displayLibrary();
+///////////DEBUGGING ^^^^^^^^ DEBUGGING///////////////
 
+
+
+
+
+
+
+
+
+////Section below is irrelevant///////
 function temp(){
     const container = document.querySelector('#container');
 
