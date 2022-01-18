@@ -9,20 +9,22 @@
     <title>Odin Library</title>
 </head>
 <body>
-    <h4>Add Book</h4>
-    <form id="formDetail"> 
-        Title: <input type="text" id="title"  placeholder="Enter Book Title">
-        Author: <input type="text" id="author"  placeholder="Enter Book Author">
-        Pages: <input type="number" id="pages"  placeholder="Enter Pages Count">
-        <label for="read-status">Read Status:</label>
-        <select name="read-status" id="read-status-id">
-            <option value="Unread">Unread</option>
-            <option value="Read">Read</option>
-        </select>
-    </form>
-    <button onclick="getAttributes()" id="addBtn">Add</button>
+    <div class="main">
+        <h2 class="title">Odin Library</h2>
+        <form id="formDetail"> 
+            Title: <input type="text" id="title"  placeholder="Enter Book Title">
+            Author: <input type="text" id="author"  placeholder="Enter Book Author">
+            Pages: <input type="number" id="pages"  placeholder="Enter Pages Count">
+            <label for="read-status">Read Status:</label>
+            <select name="read-status" id="read-status-id">
+                <option value="Unread">Unread</option>
+                <option value="Read">Read</option>
+            </select>
+        </form>
+        <button onclick="getAttributes()" id="addBtn">Add Book</button>
+    </div>
 
-    <div id="container"></div>
+    <div class="container" id="container"></div>
 
 
 </html>

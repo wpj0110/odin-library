@@ -6,7 +6,7 @@ function Book(title, author, pages, status){ //constructor
     this.author = author;
     this.pages = pages;
     this.status = status;
-    this.cardId = cardId; //btnCount is global anyway
+    this.cardId = cardId; //cardId is global anyway
 }
 
 Book.prototype.information = function(){
@@ -18,6 +18,11 @@ function getAttributes(){ //gets the attributes of all the forms
     let inputAuthor = document.getElementById("author").value;
     let inputPages = document.getElementById("pages").value;
     let inputStatus = document.getElementById("read-status-id").value;
+    //checks if there are no inputs in the forms...
+    if (inputTitle.length === 0 || inputAuthor.length === 0 || inputPages.length === 0 || inputStatus.length === 0){
+        alert("Missing Fields. Please Complete the Form");
+        return;
+    }
     let bookObj = new Book(inputTitle,inputAuthor,inputPages,inputStatus,cardId);
     myLibrary.push(bookObj); //adds the object into the end of the myLibrary array
     createCards(bookObj);
@@ -41,9 +46,16 @@ function displayLibrary(){ //displays the library contents... for debugging.
 function createCards(obj){
     const container = document.querySelector('#container');
     console.log("creating card...")
-    const div = document.createElement('div');
-    div.setAttribute('id', `${obj.cardId}`); 
-    div.textContent = `${obj.title} ${obj.author} ${obj.pages} `;
+
+    const card = document.createElement('div'); //creating the card
+    card.setAttribute('id', `${obj.cardId}`); 
+    card.setAttribute('class','card-item');
+
+    const detailDiv = document.createElement('div'); //creating an item within the card
+    detailDiv.textContent = `${obj.title} By ${obj.author}, ${obj.pages} Pages`;
+
+    const buttonsDiv = document.createElement('div'); //the div that will contain the buttons.
+    buttonsDiv.setAttribute('class','card-buttons');
 
     const statusButton = document.createElement('button');
     statusButton.setAttribute('id',`status${obj.cardId}`);
@@ -56,9 +68,11 @@ function createCards(obj){
     deleteButton.setAttribute('onclick',`deleteCard(${obj.cardId})`);
     deleteButton.textContent = "Delete This";
     
-    container.appendChild(div);
-    div.appendChild(statusButton);
-    div.appendChild(deleteButton);
+    container.appendChild(card); //appends the card to the original container
+    card.appendChild(detailDiv); //appends an item into the corresponding container
+    buttonsDiv.appendChild(statusButton); //
+    buttonsDiv.appendChild(deleteButton); //
+    card.appendChild(buttonsDiv);
 }
 
 function readStatus(cardId){ //changes the read status of the book
@@ -71,14 +85,13 @@ function readStatus(cardId){ //changes the read status of the book
             }
             const statusButton = document.getElementById(`status${myLibrary[x].cardId}`);
             statusButton.textContent = myLibrary[x].status;
-            displayLibrary();
+            //displayLibrary();
             break;
         }
     }
-    
 }
 
-function deleteCard(cardId){
+function deleteCard(cardId){ //deletes the card
     //const container = document.querySelector('#container');
     for (let x = 0; x < myLibrary.length; x++){
         if (myLibrary[x].cardId == cardId){
@@ -91,48 +104,3 @@ function deleteCard(cardId){
         }
     }
 }
-
-
-/*
-
-function createTable(tableData) { //reference: https://stackoverflow.com/a/15164958
-    var table = document.getElementById('libraryTable');
-    var tableBody = document.createElement('tbody');
-    deleteTable(); //technically, it just deletes the table every time it creates a new one.
-                   //The myLibrary array is untouched, and it is reloaded again.
-  
-    tableData.forEach(function(rowData) {
-      var row = document.createElement('tr');
-        for (var prop in rowData) { //reference: https://stackoverflow.com/a/16735184 ,adds every property to the table
-            if (Object.prototype.hasOwnProperty.call(rowData, prop)) {
-                var cell = document.createElement('td');
-                var property = rowData[`${prop}`];
-                if (property === "Unread" || property === "Read"){
-                    console.log("Read/Unread Part")
-                    var readButton = document.createElement("button"); //https://www.w3schools.com/jsref/met_document_createelement.asp
-                    readButton.innerText = `${property}`
-                    readButton.id = `${btnCount++}`;
-                    readButton.className = "read-button";
-                    readButton.setAttribute("onclick",`readStatus(${readButton.id})`);
-                    cell.appendChild(readButton)
-                } else{
-                    cell.appendChild(document.createTextNode(property));
-                }
-                row.appendChild(cell);
-
-            }
-        }
-        tableBody.appendChild(row);
-    });
-    table.appendChild(tableBody);
-    document.body.appendChild(table);
-}
-
-function deleteTable(){ //reference: https://stackoverflow.com/a/19865006
-    var myTable = document.getElementById("libraryTable");
-    var rowCount = myTable.rows.length;
-    for (var x=rowCount-1; x>0; x--) {
-       myTable.deleteRow(x);
-    }
-}
-*/
