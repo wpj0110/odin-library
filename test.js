@@ -1,39 +1,99 @@
 let myLibrary = [];
-var btnCount = 0; //button count, incremented as needed. Used as the id for newly created buttons.
+var cardId = 0; //button count, incremented as needed. Used as the id for newly created buttons.
 
-function Book(title, author, year, status){ //constructor
+function Book(title, author, pages, status){ //constructor
     this.title = title;
     this.author = author;
-    this.year = year;
+    this.pages = pages;
     this.status = status;
-    this.btnCount = btnCount; //btnCount is global anyway
+    this.cardId = cardId; //btnCount is global anyway
 }
 
 Book.prototype.information = function(){
-    return `${this.title} ${this.author} ${this.year}`;
+    return `${this.title} ${this.author} ${this.pages}`;
 }
 
 function getAttributes(){ //gets the attributes of all the forms
     let inputTitle = document.getElementById("title").value;
     let inputAuthor = document.getElementById("author").value;
-    let inputYear = document.getElementById("year").value;
+    let inputPages = document.getElementById("pages").value;
     let inputStatus = document.getElementById("read-status-id").value;
-    let bookObj = new Book(inputTitle,inputAuthor,inputYear,inputStatus);
+    let bookObj = new Book(inputTitle,inputAuthor,inputPages,inputStatus,cardId);
     myLibrary.push(bookObj); //adds the object into the end of the myLibrary array
-    createTable(myLibrary); //creates the table
+    createCards(bookObj);
+    cardId = cardId + 1;
+    
+    //createTable(myLibrary); //creates the table
 
     //Resets the forms
     document.getElementById("formDetail").reset();
     
 }
 
-function displayLibrary(){ //debugging function, not needed
+function displayLibrary(){ //displays the library contents... for debugging.
     console.log("library size = "+myLibrary.length);
     for(let x = 0; x < myLibrary.length; x++){
         //console.log("inside");
         console.log(myLibrary[x]);
     }
 }
+
+function createCards(obj){
+    const container = document.querySelector('#container');
+    console.log("creating card...")
+    const div = document.createElement('div');
+    div.setAttribute('id', `${obj.cardId}`); 
+    div.textContent = `${obj.title} ${obj.author} ${obj.pages} `;
+
+    const statusButton = document.createElement('button');
+    statusButton.setAttribute('id',`status${obj.cardId}`);
+    statusButton.setAttribute('onclick',`readStatus(${obj.cardId})`);
+    statusButton.textContent = `${obj.status}`;
+    console.log("Attributes of statusButton: "+statusButton.getAttribute('id'));
+    
+    const deleteButton = document.createElement('button');
+    deleteButton.setAttribute('id',`del${obj.cardId}`);
+    deleteButton.setAttribute('onclick',`deleteCard(${obj.cardId})`);
+    deleteButton.textContent = "Delete This";
+    
+    container.appendChild(div);
+    div.appendChild(statusButton);
+    div.appendChild(deleteButton);
+}
+
+function readStatus(cardId){ //changes the read status of the book
+    for (let x = 0; x < myLibrary.length; x++){
+        if (myLibrary[x].cardId == cardId){
+            if(myLibrary[x].status == "Unread"){
+                myLibrary[x].status = "Read";
+            }  else {
+                myLibrary[x].status = "Unread";
+            }
+            const statusButton = document.getElementById(`status${myLibrary[x].cardId}`);
+            statusButton.textContent = myLibrary[x].status;
+            displayLibrary();
+            break;
+        }
+    }
+    
+}
+
+function deleteCard(cardId){
+    //const container = document.querySelector('#container');
+    for (let x = 0; x < myLibrary.length; x++){
+        if (myLibrary[x].cardId == cardId){
+            myLibrary.splice(x, 1); //removes the bookObject in the array
+            //displayLibrary();
+
+            var card = document.getElementById(`${cardId}`);
+            card.remove();
+            break;
+        }
+    }
+}
+
+
+/*
 
 function createTable(tableData) { //reference: https://stackoverflow.com/a/15164958
     var table = document.getElementById('libraryTable');
@@ -75,66 +135,4 @@ function deleteTable(){ //reference: https://stackoverflow.com/a/19865006
        myTable.deleteRow(x);
     }
 }
-
-function readStatus(btnId){ //changes the read status of the book object from read -> unread or unread -> read 
-    document.getElementById(`${btnId}`).addEventListener('click', function (e) {
-        //console.log(e);
-        //e.target.style.background = 'blue';
-        for(let i = 0; i < myLibrary.length; i++){
-            if(btnId == myLibrary[i].btnCount){
-                if (myLibrary[i].status === "Unread"){
-                    myLibrary[i].status = "Read";
-                } else{
-                    myLibrary[i].status = "Unread";
-                }
-                break;
-            }
-        }
-        e.target.innerText = myLibrary[i].status;
-    });
-    console.log("My Library is: "+myLibrary);
-    createTable(myLibrary);
-    return;
-}
-
-
-
-/////////FOR DEBUGGING////////////
-///Testing if it works properly
-//const book1 = new Book("hobbit","author1","year1");
-//const book2 = new Book("lord of the rings","author2","year2");
-
-//addBookToLibrary(book1);
-//addBookToLibrary(book2);
-
-//displayLibrary();
-///////////DEBUGGING ^^^^^^^^ DEBUGGING///////////////
-
-
-
-
-
-
-
-
-
-////Section below is irrelevant///////
-function temp(){
-    const container = document.querySelector('#container');
-
-    const content = document.createElement('div');
-    content.classList.add('content');
-    content.textContent = 'This is the glorious text-content!';
-
-    container.appendChild(content);
-}
-
-const btn = document.querySelector('#btn');
-btn.addEventListener('click', () => {
-  alert("Hello World");
-});
-
-btn.addEventListener('click', function (e) {
-    //console.log(e);
-    e.target.style.background = 'blue';
-});
+*/
