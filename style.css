@@ -5,8 +5,10 @@ body {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-.main, .container {
+.main {
     background-color: aquamarine;
+}
+.main, .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,9 +18,29 @@ body {
 
 .main button{
     font-size: 26px;
+    margin: 10px;
+    background-color: rgb(230, 210, 210);
+    border-style: solid;
+    border-radius: 10px;
+    border-width: thick;
+    border-color: rgb(98, 30, 255);
 }
+
+.main button:hover{
+    background-color: whitesmoke;
+}
+
 .title {
+    padding: 20px;
+    background-color: rgb(165, 230, 127);
+    border-style: solid;
+    border-radius: 10px;
+    border-width: thick;
+    border-color: rgb(44, 3, 141);
     font-size: 50px;
+    font-family: Courier New, monospace;
+    color: rgb(148, 58, 7);
+
 }
 
 .container {
@@ -66,3 +88,17 @@ body {
 .card-buttons button:hover{
     background-color: whitesmoke;
 }
+.footer {
+    background-color: rgb(30, 2, 43);
+    color: whitesmoke;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 24px;
+  }

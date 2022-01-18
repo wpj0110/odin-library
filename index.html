@@ -9,22 +9,30 @@
     <title>Odin Library</title>
 </head>
 <body>
-    <div class="main">
-        <h2 class="title">Odin Library</h2>
-        <form id="formDetail"> 
-            Title: <input type="text" id="title"  placeholder="Enter Book Title">
-            Author: <input type="text" id="author"  placeholder="Enter Book Author">
-            Pages: <input type="number" id="pages"  placeholder="Enter Pages Count">
-            <label for="read-status">Read Status:</label>
-            <select name="read-status" id="read-status-id">
-                <option value="Unread">Unread</option>
-                <option value="Read">Read</option>
-            </select>
-        </form>
-        <button onclick="getAttributes()" id="addBtn">Add Book</button>
+    <div>
+        <div class="main">
+            <p class="title">Odin Library</p>
+            <form id="formDetail"> 
+                Title: <input type="text" id="title"  placeholder="Enter Book Title">
+                Author: <input type="text" id="author"  placeholder="Enter Book Author">
+                Pages: <input type="number" id="pages"  placeholder="Enter Pages Count">
+                <label for="read-status">Read Status:</label>
+                <select name="read-status" id="read-status-id">
+                    <option value="Unread">Unread</option>
+                    <option value="Read">Read</option>
+                </select>
+            </form>
+            <button onclick="getAttributes()" id="addBtn">Add Book</button>
+        </div>
+        <div class="container" id="container"></div>
     </div>
-
-    <div class="container" id="container"></div>
-
-
+    <footer class="footer">
+        <p>
+          Copyright ©
+          <script>
+            document.write(new Date().getFullYear())
+          </script>
+          <a href="https://github.com/wpj0110/odin-library" target="_blank" style="color:rgb(255, 251, 7)">wpj0110</a>
+        </p>
+      </footer>
 </html>
