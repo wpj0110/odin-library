@@ -91,7 +91,6 @@ body {
 .footer {
     background-color: rgb(30, 2, 43);
     color: whitesmoke;
-    position: absolute;
     bottom: 0;
     left: 0;
     display: flex;
