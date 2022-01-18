@@ -66,7 +66,7 @@ function createCards(obj){
     const deleteButton = document.createElement('button');
     deleteButton.setAttribute('id',`del${obj.cardId}`);
     deleteButton.setAttribute('onclick',`deleteCard(${obj.cardId})`);
-    deleteButton.textContent = "Delete This";
+    deleteButton.textContent = "Remove";
     
     container.appendChild(card); //appends the card to the original container
     card.appendChild(detailDiv); //appends an item into the corresponding container
